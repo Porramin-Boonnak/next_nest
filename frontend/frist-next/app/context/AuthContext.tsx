@@ -20,10 +20,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const getApiHost = () => {
+    if (typeof window === 'undefined') {
+      return 'http://localhost:3001';
+    }
+    return `http://${window.location.hostname}:3001`;
+  };
+
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:3001/auth/login', {
+      const res = await fetch(`${getApiHost()}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, password: password }),
@@ -46,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await fetch('http://localhost:3001/auth/logout', {
+    await fetch(`${getApiHost()}/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   });
