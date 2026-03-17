@@ -23,7 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/auth/login', {
+      const res = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, password: password }),
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await fetch('http://localhost:3000/auth/logout', {
+    await fetch('http://localhost:3001/auth/logout', {
     method: 'POST',
     credentials: 'include',
   });
