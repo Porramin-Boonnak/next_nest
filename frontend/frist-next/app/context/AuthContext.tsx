@@ -39,12 +39,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (res.ok) {
         setUser({ email });
         logger.info({ 
-          message: 'Login success' 
+          message: 'Auth success',
+          email,
         });
         return true;
       }
+      const errorMessage = await res.text().catch(() => 'unknown');
       logger.error({ 
-        message: 'Login failed' 
+        message: 'Auth failure',
+        email,
+        status: res.status,
+        detail: errorMessage,
       });
       return false;
     } finally {
